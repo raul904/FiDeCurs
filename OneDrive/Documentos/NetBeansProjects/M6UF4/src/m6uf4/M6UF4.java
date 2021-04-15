@@ -20,15 +20,13 @@ public class M6UF4 {
     public static void main(String[] args) {
      //int idProducte, String descripcio, int stockActual, int stockMinim, float pvp
     
-       
        Producte producte[] = new Producte[3];
        
        producte[0] = new Producte(1, "Portable MSI USB 3.0", 7, 3, 50);
        producte[1] = new Producte(2,"Cubo de Rubik", 5,8,25);
        producte[2] = new Producte(3,"Vela", 10,3,1);
        Comanda comanda = new Comanda();
-       
-    
+        
        for(int i=0; i<3;i++){
        producte[i].addPropertyChangeListener(comanda);
        //Es canvia l'estoc actual, se li dona valor 2
