@@ -46,7 +46,7 @@ public class Exemple {
             
                 //Crea una venda
             System.out.println("=====================================");
-            System.out.println("ES CREA VENDA DE ID 3 AMB QUANTITAT 2 ");
+            System.out.println("ES CREA VENDA DE ID "+id+" AMB QUANTITAT "+quantitat+" ");
            
             System.out.println("=====================================");
             System.out.println("LLISTA DE PRODUCTES DESPRÉS DE CREAR VENDA");
