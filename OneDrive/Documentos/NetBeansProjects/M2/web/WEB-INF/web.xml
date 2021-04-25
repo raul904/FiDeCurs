@@ -4,9 +4,17 @@
         <servlet-name>registration</servlet-name>
         <servlet-class>coreservlets.registration</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PagesLinked</servlet-name>
+        <servlet-class>coreservlets.PagesLinked</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>registration</servlet-name>
         <url-pattern>/registration</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PagesLinked</servlet-name>
+        <url-pattern>/PagesLinked</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

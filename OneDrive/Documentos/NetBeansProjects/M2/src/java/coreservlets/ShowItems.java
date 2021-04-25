@@ -22,20 +22,40 @@ public class ShowItems extends HttpServlet {
   public void doPost (HttpServletRequest request,
                       HttpServletResponse response)
       throws ServletException, IOException {
-    HttpSession session = request.getSession();
+         HttpSession session = request.getSession();
     synchronized(session) {
       @SuppressWarnings("unchecked")
       List<String> previousItems =
         (List<String>)session.getAttribute("previousItems");
+         
+      List<Integer> previousNum =
+        (List<Integer>)session.getAttribute("previousNum");
+      
+      boolean Repetido=false;
+      
       if (previousItems == null) {
         previousItems = new ArrayList<String>();
+        previousNum = new ArrayList<Integer>();
       }
+      
       String newItem = request.getParameter("newItem");
       if ((newItem != null) &&
           (!newItem.trim().equals(""))) {
-        previousItems.add(newItem);
+        for(int i=0; i<previousItems.size();i++) {
+            if (previousItems.get(i).equalsIgnoreCase(newItem) && Repetido==false) {
+                previousNum.set(i, previousNum.get(i)+1);
+                Repetido=true;
+            }
+            
+        }
+        if (Repetido==false) {
+                previousItems.add(newItem);
+                previousNum.add(1);
+            }
       }
       session.setAttribute("previousItems", previousItems);
+      session.setAttribute("previousNum", previousNum);
+      
       response.setContentType("text/html");
       PrintWriter out = response.getWriter();
       String title = "Items Purchased";
@@ -51,8 +71,9 @@ public class ShowItems extends HttpServlet {
         out.println("<I>No items</I>");
       } else {
         out.println("<UL>");
-        for(String item: previousItems) {
-          out.println("  <LI>" + item);
+        for(int i = 0; i<previousItems.size();i++) {
+          out.println("  <LI>" + previousItems.get(i)+" ("+ previousNum.get(i)+")");
+          
         }
         out.println("</UL>");
       }
