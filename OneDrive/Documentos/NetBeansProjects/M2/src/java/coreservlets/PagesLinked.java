@@ -39,20 +39,22 @@ public class PagesLinked extends HttpServlet {
      
         try  {
             
+            //Creem un array per a urls
             List<String> historialUrls = (List<String>)request.getSession().getAttribute("historialUrls");
             
+            //La primera vegada crea el array
             if (historialUrls == null){
                 historialUrls = new ArrayList<String>();
             }
-            
+            //Obtenim l'url
             URL url = new URL(request.getHeader("Referer"));
             String urlOrigen;
             urlOrigen = url.getProtocol() + "://" + url.getAuthority() + url.getPath();
-            
+            //Añade url si no existe
             if(!historialUrls.contains(urlOrigen)){
                 historialUrls.add(urlOrigen);
             }
-            
+            //Imprimir array
             out.println("<link rel='stylesheet' href='./css/styles.css' type='text/css'>");
             for (String urls : historialUrls){
                 out.println(urls);

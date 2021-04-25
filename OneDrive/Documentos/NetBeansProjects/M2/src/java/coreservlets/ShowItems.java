@@ -27,7 +27,7 @@ public class ShowItems extends HttpServlet {
       @SuppressWarnings("unchecked")
       List<String> previousItems =
         (List<String>)session.getAttribute("previousItems");
-         
+      //Creem un altre array per al contador   
       List<Integer> previousNum =
         (List<Integer>)session.getAttribute("previousNum");
       
@@ -37,18 +37,22 @@ public class ShowItems extends HttpServlet {
         previousItems = new ArrayList<String>();
         previousNum = new ArrayList<Integer>();
       }
-      
+      //Obtenim els items
       String newItem = request.getParameter("newItem");
       if ((newItem != null) &&
           (!newItem.trim().equals(""))) {
+          //Comparem el nou item amb els anteriors
         for(int i=0; i<previousItems.size();i++) {
             if (previousItems.get(i).equalsIgnoreCase(newItem) && Repetido==false) {
+                //Si exiteix iterem el numero
                 previousNum.set(i, previousNum.get(i)+1);
+                //posem el bolean a true per a que en el seguent if no el torni afegir
                 Repetido=true;
             }
             
         }
         if (Repetido==false) {
+            //afegim el item
                 previousItems.add(newItem);
                 previousNum.add(1);
             }
