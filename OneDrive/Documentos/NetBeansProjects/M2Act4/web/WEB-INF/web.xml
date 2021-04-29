@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee   http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+    <servlet>
+        <servlet-name>color</servlet-name>
+        <servlet-class>prova.color</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>showColors</servlet-name>
+        <servlet-class>showColors</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>color</servlet-name>
+        <url-pattern>/color</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>showColors</servlet-name>
+        <url-pattern>/showColors</url-pattern>
+    </servlet-mapping>
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+</web-app>
