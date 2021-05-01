@@ -21,13 +21,15 @@ import javax.swing.JTextField;
  */
 public class chatUpdate extends Thread {
     
-     String host = "localhost";
-		int port = 60000;//Port remot
-		Socket cliente;
+//     String host = "localhost";
+//		int port = 60000;//Port remot
+//		Socket cliente;
      private BufferedReader fentrada;
      private JTextField chat;
      private String user;
-        cliente = new Socket(host, port);
+       Socket clientes;
+    // cliente = new Socket(host, port);
+    
        static String mostraChat;
         
 
@@ -39,17 +41,19 @@ public class chatUpdate extends Thread {
 //       this.chat = chat;
 //    }
 
-    chatUpdate(String name, BufferedReader fentrada, JTextField chat) {
+    chatUpdate(String name, BufferedReader fentrada, JTextField chat, Socket Cliente) {
+       this.user = name;
        this.fentrada = fentrada;
        this.chat = chat;
-       this.user = user;
+       this.clientes = Cliente;
+     
     }
  
         
          @Override
         public void run()  {
          try {
-             fentrada = new BufferedReader(new InputStreamReader(cliente.getInputStream()));
+            fentrada = new BufferedReader(new InputStreamReader(clientes.getInputStream()));
              while ((mostraChat = fentrada.readLine()) != null){
                  
                  System.out.println(mostraChat);

@@ -28,8 +28,7 @@ public class Act10 extends javax.swing.JFrame {
      * Creates new form Act10
      */
      static String name;
-     private String registro;
-     private String mensaje;
+
      
      
      String user = null;
@@ -41,7 +40,7 @@ public class Act10 extends javax.swing.JFrame {
 		PrintWriter fsortida;
 		
 		//FLUX D'ENTRADA AL SERVIDOR
-		BufferedReader fentrada[];
+		BufferedReader fentrada;
 		
 		//FLUX PER A ENTRADA ESTÀNDARD
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
@@ -59,7 +58,7 @@ public class Act10 extends javax.swing.JFrame {
         
      
         conexio(name);
-        chatUpdate cu = new chatUpdate(name,fentrada[],chat);
+        chatUpdate cu = new chatUpdate(name,fentrada,chat,cliente);
         cu.start();
       
      
