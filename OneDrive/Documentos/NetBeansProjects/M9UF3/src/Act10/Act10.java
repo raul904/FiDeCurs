@@ -5,6 +5,7 @@
  */
 package Act10;
 
+import static Act10.Server.fentrada;
 import java.awt.TextField;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,7 +22,7 @@ import javax.swing.JTextField;
  *
  * @author Raul
  */
-public class Act10 extends javax.swing.JFrame implements Runnable {
+public class Act10 extends javax.swing.JFrame {
 
     /**
      * Creates new form Act10
@@ -40,7 +41,7 @@ public class Act10 extends javax.swing.JFrame implements Runnable {
 		PrintWriter fsortida;
 		
 		//FLUX D'ENTRADA AL SERVIDOR
-		BufferedReader fentrada;
+		BufferedReader fentrada[];
 		
 		//FLUX PER A ENTRADA ESTÀNDARD
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
@@ -55,14 +56,15 @@ public class Act10 extends javax.swing.JFrame implements Runnable {
                     JOptionPane.showMessageDialog(null, "Hello " + name);    
         cliente = new Socket(host, port);
         fsortida = new PrintWriter(cliente.getOutputStream(), true);
-        fentrada = new BufferedReader(new InputStreamReader(cliente.getInputStream()));
-        conexio(name);
+        
      
-        classchatUpdate(chat);
-//         Act10 hilo = new Act10(); 
-//                        Thread t = new Thread(hilo);
-//                        t.start();
-                        
+        conexio(name);
+        chatUpdate cu = new chatUpdate(name,fentrada[],chat);
+        cu.start();
+      
+     
+     
+                  
        
       
       
@@ -266,17 +268,10 @@ public class Act10 extends javax.swing.JFrame implements Runnable {
     private void conexio(String name) throws IOException {
  
         fsortida.println(name);
-        
-                
-                
-                
+       
     }
 
-    @Override
-    public void run() {
-//        if(fentrada != null){
-//        chat.setText(fentrada.toString());
-//        }
-        System.out.println("fede");
-    }
+
+
+
 }
