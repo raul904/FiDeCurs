@@ -8,123 +8,109 @@ package Act10;
 import java.net.*;
 import java.io.*;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class Server extends Thread{
-    
+public class Server extends Thread {
+
     private Socket Cliente;
-    private final int numCliente;
-    
-	 static Scanner scan = new Scanner (System.in);
-         static Socket clienteEnlazado;
-         static int numeroClientes;
-	 static PrintWriter fsortida[];
-	 static BufferedReader fentrada[];
-         static String cadena = "";
-         static Server clients[];
-         static boolean primeraVez = true;
-         
-         
-         
+    //itera cada vez que añades un cliente
+    private int numCliente;
 
+    static Scanner scan = new Scanner(System.in);
+    static Socket clienteEnlazado;
+    static int numeroClientes;
+    static PrintWriter fsortidas[];
+    static BufferedReader fentradas[];
+    static String cadena = "";
+    static Server clients[];
+    static boolean primeraVez = true;
+    static boolean manda = false;
+    static int contadorFin = 0;
 
-
-    private Server(Socket clienteEnlazado, int j) {
-         this.Cliente = clienteEnlazado;
+    private Server(Socket clienteEnlazado, int j) throws IOException {
+        this.Cliente = clienteEnlazado;
         this.numCliente = j;
+        fsortidas[j] = new PrintWriter(Cliente.getOutputStream(), true);
+        fentradas[j] = new BufferedReader(new InputStreamReader(Cliente.getInputStream()));
     }
 
-         
-	public static void main (String[] args) throws Exception {
-                
-                
-		int numeroClientes;
-		int numPort = 60000;
-		ServerSocket servidor = null;
-		 //Socket[] sockets = new Socket[3]; //Line giving me error
-		System.out.println("Introduce el maximo de clientes:");		                
-                numeroClientes = scan.nextInt();
+    public static void main(String[] args) throws Exception {
 
-                Server.clients = new Server[numeroClientes];
-                Server.fsortida = new PrintWriter[numeroClientes];
-                
-                
-            
-               
-                servidor = new ServerSocket(numPort);
+        int numeroClientes;
+        int numPort = 60000;
+        ServerSocket servidor = null;
+        //Socket[] sockets = new Socket[3]; //Line giving me error
+        System.out.println("Introduce el maximo de clientes:");
+        numeroClientes = scan.nextInt();
 
-               
-                System.out.println("Server Start");
+        Server.clients = new Server[numeroClientes];
+        Server.fsortidas = new PrintWriter[numeroClientes];
+        Server.fentradas = new BufferedReader[numeroClientes];
+        servidor = new ServerSocket(numPort);
 
-      
-                
-		
-		for (int j = 0; j < numeroClientes; j++) {
-			 
-                                 
-                System.out.println("Esperando conexion ");
-                        
-                        if(servidor != null){
-                        clienteEnlazado = servidor.accept();
-                        System.out.println("Cliente "+ (j+1) + " connectado ");
-                        
-                        // LANZA UN HILO CON UN NUEVO CLIENTE
-                    clients[j] = new Server(clienteEnlazado, j);
-                    fsortida[j] = new PrintWriter(clients[j].clienteEnlazado.getOutputStream(), true);
-                    clients[j].start();
-                        
-                        
-                        }
-                }
-		
-                       
-		
-                }
-	
-	
-		
-	
+        System.out.println("Server Start");
 
-  
- 
-        @Override
-        public void run()  {
-            try{ 
-         String user=null;
-         PrintWriter fsortida = null;
-         BufferedReader fentrada = null;
+        for (int j = 0; j < numeroClientes; j++) {
 
-            //FLUX DE SORTIDA AL CLIENT
-		 fsortida = new PrintWriter(clienteEnlazado.getOutputStream(), true);
-		
-		
-		//FLUX D'ENTRADA DEL CLIENT
-		 fentrada = new BufferedReader(new InputStreamReader(clienteEnlazado.getInputStream()));
-		
-		 if (fentrada != null) {
-                while ((cadena = fentrada.readLine()) != null) {
+            System.out.println("Esperando conexion ");
 
-                    //apartado para coger el nombre de login
-                    if (primeraVez) {
-                        fsortida.println(cadena);
-                      
-                        user=cadena;
-                        System.out.println("User:"+cadena);
-                       
-                       primeraVez = false;
-                    }
-                    if(primeraVez==false){
-                        fsortida.println(cadena);
-                        System.out.println("User:"+"[ "+user+" ]"+cadena);
-                        
-                                          }
-                }
-                 }
-		}catch(Exception e){
+            if (servidor != null) {
+                clienteEnlazado = servidor.accept();
+
+                System.out.println("Cliente " + (j + 1) + " connectado ");
+
+                // LANZA UN HILO CON UN NUEVO CLIENTE
+                clients[j] = new Server(clienteEnlazado, j);
+
+                clients[j].start();
+
+            }
+
         }
+
+    }
+
+    public static int getNumeroClientes() {
+        return numeroClientes;
+    }
+
+    public static void setNumeroClientes(int numeroClientes) {
+        Server.numeroClientes = numeroClientes;
+    }
+
+    @Override
+    public void run() {
+        try {
+            //desconectar
+
+            if (fentradas[numCliente] != null) {
+                while ((cadena = fentradas[numCliente].readLine()) != null) {
+                    //System.out.println(numCliente);3
+
+                    if (cadena.contains("Desconectado")) {
+                        contadorFin++;
+                        System.out.println(contadorFin);
+                        if (contadorFin == 4) {
+                            //numCliente
+                            System.exit(0);
+                        }
+                    }
+//                         
+//                    }
+
+                    for (int i = 0; i <= numCliente; i++) {
+                        fsortidas[i].println(cadena);
+                        System.out.println(cadena);
+                    }
+
+//       
+//                    }
+                }
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 }
-        
-        
-        
-
-    

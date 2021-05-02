@@ -20,51 +20,40 @@ import javax.swing.JTextField;
  * @author Raul
  */
 public class chatUpdate extends Thread {
-    
-//     String host = "localhost";
-//		int port = 60000;//Port remot
-//		Socket cliente;
-     private BufferedReader fentrada;
-     private JTextField chat;
-     private String user;
-       Socket clientes;
-    // cliente = new Socket(host, port);
-    
-       static String mostraChat;
-        
 
 
- 
+    private BufferedReader fentrada;
+    private JTextField chat;
+    private String user;
 
-//    chatUpdate(BufferedReader fentrada, JTextField chat) {
-//       this.fentrada = fentrada;
-//       this.chat = chat;
-//    }
+    Socket clientes;
+
+
+    static String mostraChat;
+
 
     chatUpdate(String name, BufferedReader fentrada, JTextField chat, Socket Cliente) {
-       this.user = name;
-       this.fentrada = fentrada;
-       this.chat = chat;
-       this.clientes = Cliente;
-     
+        this.user = name;
+        this.fentrada = fentrada;
+        this.chat = chat;
+        this.clientes = Cliente;
+
     }
- 
-        
-         @Override
-        public void run()  {
-         try {
+
+    @Override
+    public void run() {
+        try {
             fentrada = new BufferedReader(new InputStreamReader(clientes.getInputStream()));
-             while ((mostraChat = fentrada.readLine()) != null){
-                 
-                 System.out.println(mostraChat);
-                 chat.setText(mostraChat);
-                 
-             }
-         } catch (IOException ex) {
-             Logger.getLogger(chatUpdate.class.getName()).log(Level.SEVERE, null, ex);
-         }
-    
-        
+            while ((mostraChat = fentrada.readLine()) != null) {
+
+                System.out.println(mostraChat);
+                chat.setText(mostraChat);
+
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(chatUpdate.class.getName()).log(Level.SEVERE, null, ex);
         }
-    
+
+    }
+
 }

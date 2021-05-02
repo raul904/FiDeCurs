@@ -5,7 +5,7 @@
  */
 package Act10;
 
-import static Act10.Server.fentrada;
+
 import java.awt.TextField;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -27,49 +27,38 @@ public class Act10 extends javax.swing.JFrame {
     /**
      * Creates new form Act10
      */
-     static String name;
+    static String name;
 
-     
-     
-     String user = null;
-		String host = "localhost";
-		int port = 60000;//Port remot
-		Socket cliente;
-		
-		//FLUX DE SORTIDA AL SERVIDOR
-		PrintWriter fsortida;
-		
-		//FLUX D'ENTRADA AL SERVIDOR
-		BufferedReader fentrada;
-		
-		//FLUX PER A ENTRADA ESTÀNDARD
-		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-     
-  
-    
+    String user = null;
+    String host = "localhost";
+    int port = 60000;//Port remot
+    Socket cliente;
+
+    //FLUX DE SORTIDA AL SERVIDOR
+    PrintWriter fsortida;
+
+    //FLUX D'ENTRADA AL SERVIDOR
+    BufferedReader fentrada;
+
+    //FLUX PER A ENTRADA ESTÀNDARD
+    BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+
     public Act10() throws IOException {
-         
+
         initComponents();
-                            
+
         name = JOptionPane.showInputDialog("Type your name please");
-                    JOptionPane.showMessageDialog(null, "Hello " + name);    
+        JOptionPane.showMessageDialog(null, "Hello " + name);
         cliente = new Socket(host, port);
         fsortida = new PrintWriter(cliente.getOutputStream(), true);
-        
-     
+
         conexio(name);
-        chatUpdate cu = new chatUpdate(name,fentrada,chat,cliente);
+        
+        chatUpdate cu = new chatUpdate(name, fentrada, chat, cliente);
         cu.start();
-      
-     
-     
-                  
-       
-      
-      
-                 
+        
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -85,8 +74,8 @@ public class Act10 extends javax.swing.JFrame {
         misatge = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        chat = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
+        chat = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -113,11 +102,18 @@ public class Act10 extends javax.swing.JFrame {
         });
 
         jButton2.setText("Sortir");
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton2MouseClicked(evt);
+            }
+        });
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
+
+        jLabel4.setText("Chat:");
 
         chat.setEditable(false);
         chat.addActionListener(new java.awt.event.ActionListener() {
@@ -126,31 +122,26 @@ public class Act10 extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setText("Chat:");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(chat, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel2)
-                            .addComponent(misatge, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton1)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(serverMessages, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(chat, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel2)
+                        .addComponent(misatge, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(jLabel4)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton1))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(serverMessages, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(30, 30, 30))
         );
         layout.setVerticalGroup(
@@ -164,20 +155,20 @@ public class Act10 extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(misatge, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(serverMessages, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(163, 163, 163)
-                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(32, 32, 32))
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(28, 28, 28))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                        .addGap(70, 70, 70)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(25, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(chat)
                         .addContainerGap())))
         );
@@ -198,17 +189,21 @@ public class Act10 extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        try{	
-                 
-          String cadena;
-          cadena = misatge.getText();
-	  fsortida.println(name+"]:"+cadena);
+        try {
+
+            String cadena;
+            cadena = misatge.getText();
+            fsortida.println(" [ " +name + " ]:" + cadena);
             
-      
-   
-        }catch(Exception e){
+  
+        } catch (Exception e) {
         }
     }//GEN-LAST:event_jButton1MouseClicked
+
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+     fsortida.println(" [ " +name + " ]:" + "Desconectado");
+     dispose();
+    }//GEN-LAST:event_jButton2MouseClicked
 
     private void chatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chatActionPerformed
         // TODO add your handling code here:
@@ -265,12 +260,9 @@ public class Act10 extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void conexio(String name) throws IOException {
- 
+
         fsortida.println(name);
-       
+
     }
-
-
-
 
 }
