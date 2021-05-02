@@ -5,7 +5,6 @@
  */
 package Act10;
 
-
 import java.awt.TextField;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -51,12 +50,12 @@ public class Act10 extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "Hello " + name);
         cliente = new Socket(host, port);
         fsortida = new PrintWriter(cliente.getOutputStream(), true);
-
+        //Login
         conexio(name);
-        
+        //Pasem el chat i el missatge introduit
         chatUpdate cu = new chatUpdate(name, fentrada, chat, cliente);
         cu.start();
-        
+
     }
 
     /**
@@ -190,19 +189,18 @@ public class Act10 extends javax.swing.JFrame {
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         try {
-
+            //Enviamos el mensaje
             String cadena;
             cadena = misatge.getText();
-            fsortida.println(" [ " +name + " ]:" + cadena);
-            
-  
+            fsortida.println(" [ " + name + " ]:" + cadena);
+
         } catch (Exception e) {
         }
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
-     fsortida.println(" [ " +name + " ]:" + "Desconectado");
-     dispose();
+        fsortida.println(" [ " + name + " ]:" + "Desconectado");
+        dispose();
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void chatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chatActionPerformed
@@ -260,8 +258,8 @@ public class Act10 extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void conexio(String name) throws IOException {
-
-        fsortida.println(name);
+        //Introducimos el nombre de usuario
+        fsortida.println("Usuario " + name + " ha entrado");
 
     }
 

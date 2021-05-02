@@ -21,16 +21,13 @@ import javax.swing.JTextField;
  */
 public class chatUpdate extends Thread {
 
-
     private BufferedReader fentrada;
     private JTextField chat;
     private String user;
 
     Socket clientes;
 
-
     static String mostraChat;
-
 
     chatUpdate(String name, BufferedReader fentrada, JTextField chat, Socket Cliente) {
         this.user = name;
