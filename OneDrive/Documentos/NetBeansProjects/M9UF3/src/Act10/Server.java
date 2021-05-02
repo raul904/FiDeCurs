@@ -17,6 +17,7 @@ public class Server extends Thread {
     //itera cada vez que añades un cliente
     private int numCliente;
     //Scanner
+    
     static Scanner scan = new Scanner(System.in);
     static Socket clienteEnlazado;
     static int numeroClientes;
